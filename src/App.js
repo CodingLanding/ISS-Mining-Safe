@@ -3,6 +3,7 @@ import { Menu, X, ChevronRight, Zap, Server, Leaf, Shield, TrendingUp, Users, Ma
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import TeamPage from './TeamPage';
 import InvestorsPage from './InvestorsPage';
+import ContactModal from './ContactModal';
 
 // Number Counter Hook
 const useCountUp = (end, duration = 2000, start = 0) => {
@@ -198,7 +199,8 @@ export default function ISSMiningWebsite() {
   const [infrastructureVisible, setInfrastructureVisible] = useState(false);
   const infrastructureRef = useRef(null);
   const [servicesVisible, setServicesVisible] = useState(false);
-const servicesRef = useRef(null);
+  const servicesRef = useRef(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -565,6 +567,7 @@ useEffect(() => {
                       }}></div>
                     </a>
                     <button 
+                    onClick={() => setIsContactModalOpen(true)}
                       style={{
                         padding: '8px 24px', 
                         background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
@@ -1297,7 +1300,7 @@ onMouseLeave={(e) => {
                 </p>
                 <div style={{display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap'}}>
                   <button style={{padding: isMobile ? '12px 28px' : '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: isMobile ? 16 : 18}}>
-                    Schedule Consultation
+                    Learn More
                   </button>
                 </div>
               </div>
@@ -1365,6 +1368,10 @@ onMouseLeave={(e) => {
                 </div>
               </div>
             </footer>
+            <ContactModal 
+              isOpen={isContactModalOpen} 
+              onClose={() => setIsContactModalOpen(false)} 
+            />
           </div>
         } />
         <Route path="/TeamPage" element={<TeamPage />} />
