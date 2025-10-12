@@ -197,6 +197,8 @@ export default function ISSMiningWebsite() {
   const capabilitiesRef = useRef(null);
   const [infrastructureVisible, setInfrastructureVisible] = useState(false);
   const infrastructureRef = useRef(null);
+  const [servicesVisible, setServicesVisible] = useState(false);
+const servicesRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -264,6 +266,29 @@ export default function ISSMiningWebsite() {
     }
   };
 }, [infrastructureVisible]);
+
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !servicesVisible) {
+          setServicesVisible(true);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  if (servicesRef.current) {
+    observer.observe(servicesRef.current);
+  }
+
+  return () => {
+    if (servicesRef.current) {
+      observer.unobserve(servicesRef.current);
+    }
+  };
+}, [servicesVisible]);
 
   const stats = [
     { value: '200 MW', label: 'Now Pre-Leasing' },
@@ -336,6 +361,14 @@ export default function ISSMiningWebsite() {
           <div style={{backgroundColor: '#0a0e1a', color: '#e8eaf0', minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif'}}>
             <style>
   {`
+     @keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
     @keyframes slideDown {
       from {
         opacity: 0;
@@ -953,53 +986,198 @@ export default function ISSMiningWebsite() {
   </div>
 </section>
 
-            {/* Services Section */}
-            <section id="services" style={{padding: isMobile ? '64px 0' : '96px 0', background: 'linear-gradient(to bottom, transparent, rgba(26, 35, 50, 0.2))'}}>
-              <div style={{maxWidth: 1280, margin: '0 auto', padding: isMobile ? '0 16px' : '0 24px'}}>
-                <div style={{textAlign: 'center', marginBottom: isMobile ? 48 : 64}}>
-                  <h2 style={{fontSize: isMobile ? 32 : 48, fontWeight: 700, marginBottom: 16}}>
-                    Flexible <span style={{color: '#00ff9d'}}>Service Tiers</span>
-                  </h2>
-                  <p style={{fontSize: isMobile ? 16 : 20, color: '#9ca3af', maxWidth: 768, margin: '0 auto'}}>
-                    From hosting to white-glove management, we provide everything you need to scale your AI operations
-                  </p>
-                </div>
+         {/* Services Section */}
+<section ref={servicesRef} id="services" style={{padding: isMobile ? '64px 0' : '96px 0', background: 'linear-gradient(to bottom, transparent, rgba(26, 35, 50, 0.2))'}}>
+  <div style={{maxWidth: 1280, margin: '0 auto', padding: isMobile ? '0 16px' : '0 24px'}}>
+    <div style={{
+      textAlign: 'center', 
+      marginBottom: isMobile ? 48 : 64,
+      opacity: servicesVisible ? 1 : 0,
+      transform: servicesVisible ? 'translateY(0)' : 'translateY(30px)',
+      transition: 'all 0.8s ease-out'
+    }}>
+      <h2 style={{fontSize: isMobile ? 32 : 48, fontWeight: 700, marginBottom: 16}}>
+        Flexible <span style={{color: '#00ff9d'}}>Service Tiers</span>
+      </h2>
+      <p style={{fontSize: isMobile ? 16 : 20, color: '#9ca3af', maxWidth: 768, margin: '0 auto'}}>
+        From hosting to white-glove management, we provide everything you need to scale your AI operations
+      </p>
+    </div>
 
-                <div style={{display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: isMobile ? 24 : 32}}>
-                  {services.map((service, index) => (
-                    <div 
-                      key={index}
-                      style={{background: 'rgba(26, 35, 50, 0.5)', border: '1px solid rgba(0, 184, 255, 0.1)', borderRadius: 16, padding: isMobile ? 24 : 32}}
-                    >
-                      <h3 style={{fontSize: isMobile ? 20 : 24, fontWeight: 700, marginBottom: 8}}>{service.title}</h3>
-                      <div style={{fontSize: isMobile ? 24 : 32, fontWeight: 700, color: '#00ff9d', marginBottom: 24, fontFamily: 'monospace'}}>{service.price}</div>
-                      <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12}}>
-                        {service.features.map((feature, idx) => (
-                          <li key={idx} style={{display: 'flex', alignItems: 'start', gap: 12}}>
-                            <Check style={{width: 20, height: 20, color: '#00b8ff', flexShrink: 0, marginTop: 2}} />
-                            <span style={{color: '#9ca3af', fontSize: isMobile ? 14 : 16}}>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <button style={{width: '100%', marginTop: 32, padding: '12px 24px', border: '1px solid #00ff9d', background: 'transparent', color: '#00ff9d', fontWeight: 600, borderRadius: 8, cursor: 'pointer', fontSize: isMobile ? 14 : 16}}>
-                        Learn More
-                      </button>
-                    </div>
-                  ))}
-                </div>
+    <div style={{display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))', gap: isMobile ? 24 : 32}}>
+      {services.map((service, index) => (
+        <div 
+          key={index}
+          style={{
+            background: 'rgba(26, 35, 50, 0.5)', 
+            border: '1px solid rgba(0, 184, 255, 0.1)', 
+            borderRadius: 16, 
+            padding: isMobile ? 24 : 32,
+            opacity: servicesVisible ? 1 : 0,
+            transform: servicesVisible ? 'translateY(0)' : 'translateY(50px)',
+            transition: `opacity 0.8s ease-out ${0.2 + (index * 0.15)}s, transform 0.8s ease-out ${0.2 + (index * 0.15)}s`,
+            position: 'relative',
+            overflow: 'hidden',
+            cursor: 'pointer'
+          }}
+          onMouseEnter={(e) => {
+  e.currentTarget.style.transition = 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+  e.currentTarget.style.transform = 'translateY(-16px) scale(1.02)';
+  e.currentTarget.style.borderColor = 'rgba(0, 184, 255, 0.8)';
+  e.currentTarget.style.boxShadow = '0 24px 48px rgba(0, 184, 255, 0.3), 0 0 40px rgba(0, 255, 157, 0.2)';
+  e.currentTarget.style.background = 'rgba(26, 35, 50, 0.95)';
+}}
+onMouseLeave={(e) => {
+  e.currentTarget.style.transition = 'all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+  e.currentTarget.style.transform = servicesVisible ? 'translateY(0) scale(1)' : 'translateY(50px)';
+  e.currentTarget.style.borderColor = 'rgba(0, 184, 255, 0.1)';
+  e.currentTarget.style.boxShadow = 'none';
+  e.currentTarget.style.background = 'rgba(26, 35, 50, 0.5)';
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: -2,
+            left: -2,
+            right: -2,
+            height: 2,
+            background: 'linear-gradient(90deg, transparent, #00b8ff, #00ff9d, transparent)',
+            opacity: 0,
+            transition: 'opacity 0.4s'
+          }}></div>
+          
+          <h3 style={{
+            fontSize: isMobile ? 20 : 24, 
+            fontWeight: 700, 
+            marginBottom: 8,
+            transition: 'color 0.3s'
+          }}>{service.title}</h3>
+          
+          <div style={{
+            fontSize: isMobile ? 24 : 32, 
+            fontWeight: 700, 
+            color: '#00ff9d', 
+            marginBottom: 24, 
+            fontFamily: 'monospace',
+            opacity: servicesVisible ? 1 : 0,
+            transform: servicesVisible ? 'scale(1)' : 'scale(0.9)',
+            transition: `all 0.6s ease-out ${0.3 + (index * 0.15)}s`
+          }}>{service.price}</div>
+          
+          <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 12}}>
+            {service.features.map((feature, idx) => (
+              <li key={idx} style={{
+                display: 'flex', 
+                alignItems: 'start', 
+                gap: 12,
+                opacity: servicesVisible ? 1 : 0,
+                transform: servicesVisible ? 'translateX(0)' : 'translateX(-20px)',
+                transition: `all 0.6s ease-out ${0.4 + (index * 0.15) + (idx * 0.1)}s`
+              }}>
+                <Check style={{
+                  width: 20, 
+                  height: 20, 
+                  color: '#00b8ff', 
+                  flexShrink: 0, 
+                  marginTop: 2,
+                  transition: 'transform 0.3s'
+                }} />
+                <span style={{color: '#9ca3af', fontSize: isMobile ? 14 : 16}}>{feature}</span>
+              </li>
+            ))}
+          </ul>
+          
+          <button style={{
+            width: '100%', 
+            marginTop: 32, 
+            padding: '12px 24px', 
+            border: '1px solid #00ff9d', 
+            background: 'transparent', 
+            color: '#00ff9d', 
+            fontWeight: 600, 
+            borderRadius: 8, 
+            cursor: 'pointer', 
+            fontSize: isMobile ? 14 : 16,
+            transition: 'all 0.3s',
+            opacity: servicesVisible ? 1 : 0,
+            transform: servicesVisible ? 'translateY(0)' : 'translateY(20px)',
+            transitionDelay: `${0.6 + (index * 0.15)}s`
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, #00ff9d, #00b8ff)';
+            e.currentTarget.style.color = '#0a0e1a';
+            e.currentTarget.style.borderColor = 'transparent';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 8px 16px rgba(0, 255, 157, 0.3)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = '#00ff9d';
+            e.currentTarget.style.borderColor = '#00ff9d';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+          >
+            Learn More
+          </button>
+        </div>
+      ))}
+    </div>
 
-                <div style={{marginTop: 48, background: 'linear-gradient(90deg, rgba(0, 255, 157, 0.1), rgba(0, 184, 255, 0.1))', border: '1px solid rgba(0, 255, 157, 0.2)', borderRadius: 16, padding: isMobile ? 24 : 32, textAlign: 'center'}}>
-                  <h3 style={{fontSize: isMobile ? 20 : 24, fontWeight: 700, marginBottom: 12}}>Sustainability Premium Available</h3>
-                  <p style={{color: '#9ca3af', marginBottom: 24, fontSize: isMobile ? 14 : 16}}>
-                    Add our 20-30% sustainability premium for carbon-neutral AI compute with REC sales and 45Q tax credits
-                  </p>
-                  <button style={{padding: isMobile ? '10px 24px' : '12px 32px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: isMobile ? 14 : 16}}>
-                    Request Custom Quote
-                  </button>
-                </div>
-              </div>
-            </section>
-
+    <div style={{
+      marginTop: 48, 
+      background: 'linear-gradient(90deg, rgba(0, 255, 157, 0.1), rgba(0, 184, 255, 0.1))', 
+      border: '1px solid rgba(0, 255, 157, 0.2)', 
+      borderRadius: 16, 
+      padding: isMobile ? 24 : 32, 
+      textAlign: 'center',
+      opacity: servicesVisible ? 1 : 0,
+      transform: servicesVisible ? 'translateY(0)' : 'translateY(30px)',
+      transition: 'all 0.8s ease-out 0.8s',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '-100%',
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+        animation: servicesVisible ? 'shimmer 2s ease-in-out 1s' : 'none'
+      }}></div>
+      
+      <h3 style={{fontSize: isMobile ? 20 : 24, fontWeight: 700, marginBottom: 12}}>Sustainability Premium Available</h3>
+      <p style={{color: '#9ca3af', marginBottom: 24, fontSize: isMobile ? 14 : 16}}>
+        Add our 20-30% sustainability premium for carbon-neutral AI compute with REC sales and 45Q tax credits
+      </p>
+      <button style={{
+        padding: isMobile ? '10px 24px' : '12px 32px', 
+        background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
+        color: '#0a0e1a', 
+        fontWeight: 600, 
+        borderRadius: 8, 
+        border: 'none', 
+        cursor: 'pointer', 
+        fontSize: isMobile ? 14 : 16,
+        transition: 'all 0.3s',
+        position: 'relative',
+        zIndex: 1
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 255, 157, 0.4)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
+      >
+        Request Custom Quote
+      </button>
+    </div>
+  </div>
+</section>
            {/* About/Our Story Section */}
             <section id="about" style={{padding: isMobile ? '64px 0' : '96px 0'}}>
               <div style={{maxWidth: 1280, margin: '0 auto', padding: isMobile ? '0 16px' : '0 24px'}}>
@@ -1120,9 +1298,6 @@ export default function ISSMiningWebsite() {
                 <div style={{display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap'}}>
                   <button style={{padding: isMobile ? '12px 28px' : '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: isMobile ? 16 : 18}}>
                     Schedule Consultation
-                  </button>
-                  <button style={{padding: isMobile ? '12px 28px' : '16px 40px', border: '1px solid #00ff9d', background: 'transparent', color: '#00ff9d', fontWeight: 600, borderRadius: 8, cursor: 'pointer', fontSize: isMobile ? 16 : 18}}>
-                    Download Spec Sheet
                   </button>
                 </div>
               </div>
