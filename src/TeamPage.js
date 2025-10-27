@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronRight, Linkedin, Mail, Award, Briefcase, GraduationCap, Target } from 'lucide-react';
+import ContactModal from './ContactModal';
+
 
 
 export default function ISSTeamPage() {
@@ -8,6 +10,7 @@ export default function ISSTeamPage() {
   const [hoveredLink, setHoveredLink] = useState(null);
   const [hoveredMember, setHoveredMember] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +37,7 @@ export default function ISSTeamPage() {
     {
       name: 'Thomas Flake',
       role: 'Co-Founder & CEO',
+      image: '/Tom.png', 
       bio: 'Thomas Flake is a seasoned entrepreneur and U.S. Navy veteran with deep expertise in engineering, operations, and innovation. He has raised over $75 million in funding across telecom and blockchain ventures, including designing and operating a cutting-edge cryptocurrency data center. His past roles include founding Picus (a CLEC), leading the Peninsula Technology Incubator, and serving as Lean Six Sigma Master Black Belt for Naval Special Warfare. With an MBA from William & Mary and multiple industry certifications, Thomas drives the vision and execution behind ISS\'s AI-powered infrastructure.',
       highlights: [
         'Raised over $75M in funding',
@@ -46,6 +50,7 @@ export default function ISSTeamPage() {
     {
       name: 'Charles Clement',
       role: 'Co-Founder & COO',
+       image: '/Charles.png',
       bio: 'Charles Clement is an operations leader with 10+ years of experience in general construction and commercial solar deployment. As COO of Southeast Energy Solutions, he manages implementation, logistics, and team coordination across all field operations. Known for his executional discipline and leadership in scaling field teams, Charles ensures projects are delivered on time and at quality across all phases of ISS\'s infrastructure development.',
       highlights: [
         '10+ years in construction',
@@ -58,6 +63,7 @@ export default function ISSTeamPage() {
     {
       name: 'Skip Smith',
       role: 'Chief Engineer',
+       image: '/Skip.png',
       bio: 'Skip Smith is a Certified Energy Manager and nationally recognized expert in waste-to-energy systems, with over 500 MW of reclaimed heat and gas-to-power projects delivered. Since founding his consultancy in 1996, he has specialized in rapid ROI energy conversion systems, landfill gas, digester gas, and electrochemical purification of process gases. His deep technical knowledge and hands-on experience make him central to ISS\'s hybrid solar and gas-powered architecture.',
       highlights: [
         'Certified Energy Manager',
@@ -70,6 +76,7 @@ export default function ISSTeamPage() {
     {
       name: 'Brant Jones',
       role: 'Co-Founder & Treasurer',
+     image: '/Brant.png',
       bio: 'Brant Jones is the Co-Founder and people-first leader behind the company\'s mission. With a Master\'s in Social Work and years of solar experience, Brant brings a unique ability to fuse technical excellence with genuine customer care. His focus on integrity, trust, and service-driven growth shapes the cultural and operational foundation of the organization as it scales into the commercial and infrastructure space.',
       highlights: [
         'Master\'s in Social Work',
@@ -82,6 +89,7 @@ export default function ISSTeamPage() {
     {
       name: 'Nip Lunga',
       role: 'Chief Strategy & Market Development Officer',
+        image: '/Nip.png',
       bio: 'Nip Lunga brings over 20 years of experience in telecom and energy strategy. He founded Rural Wireless Internet to expand broadband access to underserved communities and later advised industrial clients on energy procurement at InSource Power. His long-standing partnership with Skip Smith has produced multiple successful generation projects. At ISS, Nip leads market positioning, utility engagement, and regulatory alignment across energy and data infrastructure.',
       highlights: [
         '20+ years in telecom & energy',
@@ -94,7 +102,8 @@ export default function ISSTeamPage() {
     {
       name: 'Roberto Saad',
       role: 'Founder, SolaraWise Solutions | Chief Business Development Officer',
-      bio: 'Roberto Saad is a solar development strategist and founder of SolaraWise Solutions, specializing in high-performance client acquisition. With an Industrial Engineering degree from the Latin University of Panama, he brings systems-level thinking to sales, outreach, and investor alignment. Roberto leads the end-to-end development process—sourcing investment, qualifying opportunities, negotiating PPAs, and overseeing CRM and performance systems—ensuring scalable, bankable project delivery across residential and commercial sectors.',
+     image: '/Rob.png',
+      bio: 'Roberto Saad is a solar development strategist and founder of SolaraWise Solutions, specializing in high-performance client acquisition. With an Industrial Engineering degree from the Latin University of Panama, he brings systems-level thinking to sales, outreach, and investor alignment. Roberto leads the end-to-end development processâ€"sourcing investment, qualifying opportunities, negotiating PPAs, and overseeing CRM and performance systemsâ€"ensuring scalable, bankable project delivery across residential and commercial sectors.',
       highlights: [
         'Founder of SolaraWise Solutions',
         'Industrial Engineering degree',
@@ -104,6 +113,7 @@ export default function ISSTeamPage() {
       color: '#00b8ff'
     }
   ];
+
 
   return (
     <div style={{backgroundColor: '#0a0e1a', color: '#e8eaf0', minHeight: '100vh', fontFamily: 'system-ui, -apple-system, sans-serif'}}>
@@ -170,53 +180,70 @@ export default function ISSTeamPage() {
             </div>
 
             {/* Desktop Menu */}
-            <div style={{display: isMobile ? 'none' : 'flex', alignItems: 'center', gap: 32}}>
-              {['home', 'capabilities', 'team', 'contact'].map((item) => (
-                <a 
-                  key={item}
-                  href={item === 'home' ? '/' : `#${item}`} 
-                  style={{
-                    color: hoveredLink === item ? '#00ff9d' : '#e8eaf0', 
-                    textDecoration: 'none',
-                    transition: 'all 0.3s',
-                    position: 'relative',
-                    textTransform: 'capitalize',
-                    fontWeight: 500
-                  }}
-                  onMouseEnter={() => setHoveredLink(item)}
-                  onMouseLeave={() => setHoveredLink(null)}
-                >
-                  {item}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: -4,
-                    left: 0,
-                    width: hoveredLink === item ? '100%' : '0%',
-                    height: 2,
-                    background: 'linear-gradient(90deg, #00ff9d, #00b8ff)',
-                    transition: 'width 0.3s ease'
-                  }}></div>
-                </a>
-              ))}
-              <button 
-                style={{
-                  padding: '8px 24px', 
-                  background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
-                  color: '#0a0e1a', 
-                  fontWeight: 600, 
-                  borderRadius: 8, 
-                  border: 'none', 
-                  cursor: 'pointer',
-                  transition: 'all 0.3s',
-                  transform: hoveredLink === 'contact' ? 'translateY(-2px)' : 'translateY(0)',
-                  boxShadow: hoveredLink === 'contact' ? '0 8px 20px rgba(0, 255, 157, 0.4)' : '0 0 0 rgba(0, 255, 157, 0)'
-                }}
-                onMouseEnter={() => setHoveredLink('contact')}
-                onMouseLeave={() => setHoveredLink(null)}
-              >
-                Contact Us
-              </button>
-            </div>
+<div style={{display: isMobile ? 'none' : 'flex', alignItems: 'center', gap: 32}}>
+  {['home', 'services', 'team', 'investors'].map((item) => (
+    <a 
+      key={item}
+      href={
+        item === 'home' ? '/' : 
+        item === 'team' ? '/TeamPage' :
+        item === 'investors' ? '/investors' :
+        item === 'services' ? '/#services' :
+        `#${item}`
+      }
+      onClick={(e) => {
+        // Handle services scroll on same page
+        if (item === 'services' && window.location.pathname === '/') {
+          e.preventDefault();
+          const servicesSection = document.getElementById('services');
+          if (servicesSection) {
+            servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }}
+      style={{
+        color: hoveredLink === item ? '#00ff9d' : '#e8eaf0', 
+        textDecoration: 'none',
+        transition: 'all 0.3s',
+        position: 'relative',
+        textTransform: 'capitalize',
+        fontWeight: 500
+      }}
+      onMouseEnter={() => setHoveredLink(item)}
+      onMouseLeave={() => setHoveredLink(null)}
+    >
+      {item}
+      <div style={{
+        position: 'absolute',
+        bottom: -4,
+        left: 0,
+        width: hoveredLink === item ? '100%' : '0%',
+        height: 2,
+        background: 'linear-gradient(90deg, #00ff9d, #00b8ff)',
+        transition: 'width 0.3s ease'
+      }}></div>
+    </a>
+  ))}
+  <button 
+    onClick={() => setIsContactModalOpen(true)}
+    style={{
+      padding: '8px 24px', 
+      background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
+      color: '#0a0e1a', 
+      fontWeight: 600, 
+      borderRadius: 8, 
+      border: 'none', 
+      cursor: 'pointer',
+      transition: 'all 0.3s',
+      transform: hoveredLink === 'contact' ? 'translateY(-2px)' : 'translateY(0)',
+      boxShadow: hoveredLink === 'contact' ? '0 8px 20px rgba(0, 255, 157, 0.4)' : '0 0 0 rgba(0, 255, 157, 0)'
+    }}
+    onMouseEnter={() => setHoveredLink('contact')}
+    onMouseLeave={() => setHoveredLink(null)}
+  >
+    Contact Us
+  </button>
+</div>
 
             {/* Mobile Menu Button */}
             <button 
@@ -236,57 +263,74 @@ export default function ISSTeamPage() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
-          {isMenuOpen && isMobile && (
-            <div style={{
-              paddingTop: 16,
-              paddingBottom: 24,
-              borderTop: '1px solid #1a2332',
-              marginTop: 16,
-              animation: 'slideDown 0.3s ease'
-            }}>
-              <div style={{display: 'flex', flexDirection: 'column', gap: 16}}>
-                {['home', 'capabilities', 'team', 'contact'].map((item) => (
-                  <a 
-                    key={item}
-                    href={item === 'home' ? '/' : `#${item}`}
-                    onClick={() => setIsMenuOpen(false)}
-                    style={{
-                      color: '#e8eaf0',
-                      textDecoration: 'none',
-                      textTransform: 'capitalize',
-                      padding: '12px 16px',
-                      borderRadius: 8,
-                      background: hoveredLink === item ? 'rgba(0, 255, 157, 0.1)' : 'transparent',
-                      transition: 'all 0.3s',
-                      fontWeight: 500
-                    }}
-                    onMouseEnter={() => setHoveredLink(item)}
-                    onMouseLeave={() => setHoveredLink(null)}
-                  >
-                    {item}
-                  </a>
-                ))}
-                <button style={{
-                  padding: '12px 24px', 
-                  background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
-                  color: '#0a0e1a', 
-                  fontWeight: 600, 
-                  borderRadius: 8, 
-                  border: 'none', 
-                  cursor: 'pointer',
-                  marginTop: 8
-                }}>
-                  Contact Us
-                </button>
-              </div>
-            </div>
-          )}
+         {/* Mobile Menu */}
+{isMenuOpen && isMobile && (
+  <div style={{
+    paddingTop: 16,
+    paddingBottom: 24,
+    borderTop: '1px solid #1a2332',
+    marginTop: 16,
+    animation: 'slideDown 0.3s ease'
+  }}>
+    <div style={{display: 'flex', flexDirection: 'column', gap: 16}}>
+      {['home', 'services', 'team', 'investors', 'contact'].map((item) => (
+        <a 
+          key={item}
+          href={
+            item === 'home' ? '/' : 
+            item === 'team' ? '/TeamPage' :
+            item === 'investors' ? '/investors' :
+            item === 'services' ? '/#services' :
+            `#${item}`
+          }
+          onClick={(e) => {
+            setIsMenuOpen(false);
+            
+            // Handle services scroll on same page
+            if (item === 'services' && window.location.pathname === '/') {
+              e.preventDefault();
+              const servicesSection = document.getElementById('services');
+              if (servicesSection) {
+                servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }
+          }}
+          style={{
+            color: '#e8eaf0',
+            textDecoration: 'none',
+            textTransform: 'capitalize',
+            padding: '12px 16px',
+            borderRadius: 8,
+            background: hoveredLink === item ? 'rgba(0, 255, 157, 0.1)' : 'transparent',
+            transition: 'all 0.3s',
+            fontWeight: 500
+          }}
+          onMouseEnter={() => setHoveredLink(item)}
+          onMouseLeave={() => setHoveredLink(null)}
+        >
+          {item}
+        </a>
+      ))}
+      <button style={{
+        padding: '12px 24px', 
+        background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
+        color: '#0a0e1a', 
+        fontWeight: 600, 
+        borderRadius: 8, 
+        border: 'none', 
+        cursor: 'pointer',
+        marginTop: 8
+      }}>
+        Contact Us
+      </button>
+    </div>
+  </div>
+)}
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section style={{position: 'relative', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', paddingTop: 120, paddingBottom: 80}}>
+      <section style={{position: 'relative', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', paddingTop: 120, paddingBottom: 10}}>
         {/* Animated Background */}
         <div style={{position: 'absolute', inset: 0, opacity: 0.2, pointerEvents: 'none'}}>
           <div style={{position: 'absolute', top: 80, left: 40, width: 384, height: 384, background: 'rgba(0, 255, 157, 0.2)', borderRadius: '50%', filter: 'blur(80px)'}}></div>
@@ -334,22 +378,25 @@ export default function ISSTeamPage() {
                 onMouseEnter={() => setHoveredMember(index)}
                 onMouseLeave={() => setHoveredMember(null)}
               >
-                {/* Profile Image Placeholder */}
+                {/* Profile Image */}
                 <div style={{
                   width: 120,
                   height: 120,
                   borderRadius: '50%',
-                  background: `linear-gradient(135deg, ${member.color}20, rgba(26, 35, 50, 0.8))`,
                   border: `3px solid ${member.color}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  overflow: 'hidden',
                   marginBottom: 24,
-                  fontSize: 48,
-                  fontWeight: 700,
-                  color: member.color
+                  boxShadow: `0 8px 24px ${member.color}40`
                 }}>
-                  {member.name.split(' ').map(n => n[0]).join('')}
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
                 </div>
 
                 <h3 style={{fontSize: 24, fontWeight: 700, marginBottom: 8}}>{member.name}</h3>
@@ -480,11 +527,8 @@ export default function ISSTeamPage() {
             Partner with a team that combines decades of expertise with a commitment to sustainability
           </p>
           <div style={{display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap'}}>
-            <button style={{padding: '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 18}}>
-              Schedule a Meeting
-            </button>
-            <button style={{padding: '16px 40px', border: '1px solid #00ff9d', background: 'transparent', color: '#00ff9d', fontWeight: 600, borderRadius: 8, cursor: 'pointer', fontSize: 18}}>
-              View Careers
+            <button   onClick={() => setIsContactModalOpen(true)} style={{padding: '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 18}}>
+              Learn More
             </button>
           </div>
         </div>
@@ -552,6 +596,10 @@ export default function ISSTeamPage() {
           </div>
         </div>
       </footer>
+      <ContactModal 
+  isOpen={isContactModalOpen} 
+  onClose={() => setIsContactModalOpen(false)} 
+/>
     </div>
   );
 }

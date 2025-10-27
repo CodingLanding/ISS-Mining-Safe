@@ -355,6 +355,17 @@ useEffect(() => {
       ]
     }
   ];
+  useEffect(() => {
+  // Scroll to section if hash is present in URL
+  if (window.location.hash === '#services') {
+    setTimeout(() => {
+      const servicesSection = document.getElementById('services');
+      if (servicesSection) {
+        servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+}, []);
 
   return (
     <Router>
@@ -661,7 +672,27 @@ useEffect(() => {
                       >
                         Team
                       </a>
-                      <button style={{
+                      <a 
+                        href="/Investors"
+                        onClick={() => setIsMenuOpen(false)}
+                        style={{
+                          color: '#e8eaf0',
+                          textDecoration: 'none',
+                          textTransform: 'capitalize',
+                          padding: '12px 16px',
+                          borderRadius: 8,
+                          background: hoveredLink === 'team' ? 'rgba(0, 255, 157, 0.1)' : 'transparent',
+                          transition: 'all 0.3s',
+                          fontWeight: 500
+                        }}
+                        onMouseEnter={() => setHoveredLink('team')}
+                        onMouseLeave={() => setHoveredLink(null)}
+                      >
+                        Investors
+                      </a>
+                      <button 
+                      onClick={() => setIsContactModalOpen(true)}
+                      style={{
                         padding: '12px 24px', 
                         background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
                         color: '#0a0e1a', 
@@ -741,7 +772,7 @@ useEffect(() => {
       </p>
 
       <div className="fade-in-up-4" style={{display: 'flex', gap: 16, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap'}}>
-        <button style={{padding: isMobile ? '12px 24px' : '16px 32px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: isMobile ? 14 : 16}}>
+        <button  onClick={() => setIsContactModalOpen(true)} style={{padding: isMobile ? '12px 24px' : '16px 32px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: isMobile ? 14 : 16}}>
           Learn More
           <ChevronRight style={{width: 20, height: 20}} />
         </button>
@@ -1090,7 +1121,7 @@ onMouseLeave={(e) => {
             ))}
           </ul>
           
-          <button style={{
+          <button   onClick={() => setIsContactModalOpen(true)} style={{
             width: '100%', 
             marginTop: 32, 
             padding: '12px 24px', 
@@ -1154,7 +1185,7 @@ onMouseLeave={(e) => {
       <p style={{color: '#9ca3af', marginBottom: 24, fontSize: isMobile ? 14 : 16}}>
         Add our 20-30% sustainability premium for carbon-neutral AI compute with REC sales and 45Q tax credits
       </p>
-      <button style={{
+      <button   onClick={() => setIsContactModalOpen(true)} style={{
         padding: isMobile ? '10px 24px' : '12px 32px', 
         background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', 
         color: '#0a0e1a', 
@@ -1299,7 +1330,7 @@ onMouseLeave={(e) => {
                   Join hyperscalers, enterprises, and AI startups leveraging our sustainable infrastructure
                 </p>
                 <div style={{display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap'}}>
-                  <button style={{padding: isMobile ? '12px 28px' : '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: isMobile ? 16 : 18}}>
+                  <button   onClick={() => setIsContactModalOpen(true)} style={{padding: isMobile ? '12px 28px' : '16px 40px', background: 'linear-gradient(135deg, #00ff9d, #00b8ff)', color: '#0a0e1a', fontWeight: 600, borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: isMobile ? 16 : 18}}>
                     Learn More
                   </button>
                 </div>
