@@ -304,12 +304,12 @@ useEffect(() => {
       icon: <Zap style={{width: 32, height: 32}} />,
       title: 'Hybrid Power System',
       description: '362 MW CHP + 284 MW solar with integrated thermal cooling',
-      metrics: ['99.99% uptime', 'Grid-independent', 'Cost optimized']
+      metrics: ['99.999% uptime', 'Grid-independent', 'Cost optimized']
     },
     {
       icon: <Server style={{width: 32, height: 32}} />,
       title: 'GPU Infrastructure',
-      description: 'NVIDIA H100 optimized pods with liquid cooling',
+      description: 'NVIDIA H100 optimized pods with Direct-To-Chip cooling',
       metrics: ['20-140 kW/rack', '100 Gbps connectivity', 'White glove service']
     },
     {
@@ -718,7 +718,7 @@ useEffect(() => {
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundImage: 'url(/world.jpg)',
+    backgroundImage: 'url(/World.png)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
